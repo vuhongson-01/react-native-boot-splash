@@ -184,7 +184,10 @@ Edit the `ios/YourProjectName/AppDelegate.m` file:
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
 
-  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView]; // <- initialization using the storyboard file name
+// add splash.png in your Project in xCode
+  UIImage *image = [UIImage imageNamed:@"splash.png"];
+  UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView logoIcon:imageView]; // <- initialization using the storyboard file name
 
   return YES;
 }
@@ -213,7 +216,10 @@ public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    RNBootSplash.init(R.drawable.bootsplash, MainActivity.this); // <- display the generated bootsplash.xml drawable over our MainActivity
+    // R.drawable.bootsplash : icon logo drawable file
+    // R.anim.scale : scale animation resource file
+    // R.drawable.background : background image of splash screen
+    RNBootSplash.init(R.drawable.bootsplash, R.anim.scale, MainActivity.this, getApplicationContext(), R.drawable.background); // <- add this line
   }
 ```
 
@@ -231,8 +237,8 @@ As Android will not create our main activity before launching the app, we need t
 
   <!-- Add the following lines (BootTheme should inherit from AppTheme) -->
   <style name="BootTheme" parent="AppTheme">
-    <!-- set the generated bootsplash.xml drawable as activity background -->
-    <item name="android:background">@drawable/bootsplash</item>
+    <!-- set the generated bootsplashbgr.xml drawable as activity background or background picture in drawable folder-->
+    <item name="android:background">@drawable/background</item>
   </style>
 
 </resources>
